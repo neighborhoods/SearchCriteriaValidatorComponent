@@ -1,0 +1,30 @@
+{
+  "name": "neighborhoods/search-criteria-validator-component",
+  "description": "Provides validators for SearchCriteria in Prefab.",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ariel Allon",
+      "email": "ariel.allon@neighborhoods.com"
+    },
+    {
+      "name": "Brad Wilson",
+      "email": "brad@neighborhoods.com"
+    }
+  ],
+  "require": {
+    "php": "^7.2"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "Neighborhoods\\SearchCriteriaValidatorComponent\\": [
+        "src",
+        "fab"
+      ]
+    }
+  }
+}
