@@ -1,0 +1,10 @@
+services:
+  Neighborhoods\SearchCriteriaValidatorComponent\Prefab5\SearchCriteriaInterface:
+    class: Neighborhoods\SearchCriteriaValidatorComponent\Prefab5\SearchCriteria
+    calls:
+      - [setSearchCriteriaFilterMapFactory, ['@Neighborhoods\SearchCriteriaValidatorComponent\Prefab5\SearchCriteria\Filter\Map\FactoryInterface']]
+      - [setSearchCriteriaSortOrderMapFactory, ['@Neighborhoods\SearchCriteriaValidatorComponent\Prefab5\SearchCriteria\SortOrder\Map\FactoryInterface']]
+      - [setSearchCriteriaVisitorMapFactory, ['@Neighborhoods\SearchCriteriaValidatorComponent\Prefab5\SearchCriteria\Visitor\Map\FactoryInterface']]
+      - [setSearchCriteriaDoctrineDBALQueryQueryBuilderVisitorFactory, ['@Neighborhoods\SearchCriteriaValidatorComponent\Prefab5\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder\Visitor\FactoryInterface']]
+      - [setValidatorVisitorFactory, ['@\Neighborhoods\SearchCriteriaValidatorComponent\ValidatorVisitor\FactoryInterface']] # @override
+    shared: false

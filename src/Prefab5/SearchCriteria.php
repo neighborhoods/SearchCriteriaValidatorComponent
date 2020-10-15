@@ -10,6 +10,7 @@ use Neighborhoods\SearchCriteriaValidatorComponent\Prefab5\SearchCriteria\Visito
 use Neighborhoods\SearchCriteriaValidatorComponent\Prefab5\SearchCriteria\SortOrderInterface;
 use Neighborhoods\SearchCriteriaValidatorComponent\Prefab5\SearchCriteria\VisitorInterface;
 use Neighborhoods\SearchCriteriaValidatorComponent\Prefab5\SearchCriteria\Doctrine\DBAL\Query\QueryBuilder;
+use Neighborhoods\SearchCriteriaValidatorComponent\ValidatorVisitor; /** @override */
 
 class SearchCriteria implements SearchCriteriaInterface
 {
@@ -17,6 +18,7 @@ class SearchCriteria implements SearchCriteriaInterface
     use SortOrder\Map\Factory\AwareTrait;
     use Visitor\Map\Factory\AwareTrait;
     use QueryBuilder\Visitor\Factory\AwareTrait;
+    use ValidatorVisitor\Factory\AwareTrait; /** @override */
 
     private const QUERY_STRING_PARAM_SEPARATOR = '&';
 
@@ -82,13 +84,18 @@ class SearchCriteria implements SearchCriteriaInterface
         return $this->sortOrders !== null;
     }
 
+    /** @override */
     protected function getVisitors() : Visitor\MapInterface
     {
-        // @todo add validator visitor logic here?
         if ($this->visitors === null) {
             $this->visitors = $this->getSearchCriteriaVisitorMapFactory()->create();
-            $doctrineQueryBuilderVisitor = $this->getSearchCriteriaDoctrineDBALQueryQueryBuilderVisitorFactory()->create();
+
+            $doctrineQueryBuilderVisitor = $this->getSearchCriteriaDoctrineDBALQueryQueryBuilderVisitorFactory()
+                ->create();
             $this->addVisitor($doctrineQueryBuilderVisitor);
+
+            $validatorVisitor = $this->getValidatorVisitorFactory()->create();
+            $this->addVisitor($validatorVisitor);
         }
         return $this->visitors;
     }

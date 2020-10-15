@@ -6,6 +6,7 @@ namespace Neighborhoods\SearchCriteriaValidatorComponent\Prefab5\SearchCriteria;
 use Neighborhoods\SearchCriteriaValidatorComponent\Prefab5\SearchCriteriaInterface;
 use Neighborhoods\SearchCriteriaValidatorComponent\Prefab5\SearchCriteria;
 use Neighborhoods\SearchCriteriaValidatorComponent\Prefab5\Psr;
+use Neighborhoods\SearchCriteriaValidatorComponent\ValidatorVisitorInterface; /** @override */
 
 class Builder implements BuilderInterface
 {
@@ -24,9 +25,7 @@ class Builder implements BuilderInterface
         $this->hydrateSortOrder($searchCriteria);
         $this->hydratePageSize($searchCriteria);
         $this->hydrateCurrentPage($searchCriteria);
-
-        /** @override */
-        $this->validateSearchCriteria($searchCriteria);
+        $this->validateSearchCriteria($searchCriteria); /** @override */
 
         return $searchCriteria;
     }
