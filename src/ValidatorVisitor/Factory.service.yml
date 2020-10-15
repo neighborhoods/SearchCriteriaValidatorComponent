@@ -1,0 +1,7 @@
+services:
+  Neighborhoods\SearchCriteriaValidatorComponent\ValidatorVisitor\FactoryInterface:
+    class: Neighborhoods\SearchCriteriaValidatorComponent\ValidatorVisitor\Factory
+    public: false
+    shared: true
+    calls:
+      - [setValidatorVisitor, ['@Neighborhoods\SearchCriteriaValidatorComponent\ValidatorVisitorInterface']]
