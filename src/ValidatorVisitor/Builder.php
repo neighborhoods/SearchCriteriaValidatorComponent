@@ -5,40 +5,33 @@ namespace Neighborhoods\SearchCriteriaValidatorComponent\ValidatorVisitor;
 
 use LogicException;
 use Neighborhoods\SearchCriteriaValidatorComponent\ValidatorVisitorInterface;
+use Neighborhoods\SearchCriteriaValidatorComponent\ValidatorVisitor\Decorator\FactoryInterface as DecoratorFactoryInterface;
 
-class Builder implements BuilderInterface
+final class Builder implements BuilderInterface
 {
     use Factory\AwareTrait;
 
-    protected $record;
+    /** @var array  */
+    protected $decoratorFactories = [];
 
     public function build(): ValidatorVisitorInterface
     {
         $ValidatorVisitor = $this->getValidatorVisitorFactory()->create();
-        
-        
-        // @TODO - build the object.
-        throw new \LogicException('Unimplemented build method.');
+
+        foreach ($this->decoratorFactories as $decoratorFactory) {
+            $ValidatorVisitor = $decoratorFactory->create()->setThrowableDiagnostic($ValidatorVisitor);
+        }
 
         return $ValidatorVisitor;
     }
 
-    protected function getRecord(): array
+    public function addFactory(DecoratorFactoryInterface $decoratorFactory): BuilderInterface
     {
-        if ($this->record === null) {
-            throw new LogicException('Builder record has not been set.');
+        $factoryKey = str_replace('\\', '', get_class($decoratorFactory));
+        if (isset($this->decoratorFactories[$factoryKey])) {
+            throw new LogicException(sprintf('Factory with key, "%s", is already set.', $factoryKey));
         }
-
-        return $this->record;
-    }
-
-    public function setRecord(array $record): BuilderInterface
-    {
-        if ($this->record !== null) {
-            throw new LogicException('Builder record is already set.');
-        }
-
-        $this->record = $record;
+        $this->decoratorFactories[$factoryKey] = $decoratorFactory;
 
         return $this;
     }
